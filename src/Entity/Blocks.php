@@ -14,9 +14,6 @@ class Blocks
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $batch = null;
-
     #[ORM\Column]
     private ?int $blockNumber = null;
 
@@ -32,14 +29,12 @@ class Blocks
     #[ORM\Column(length: 255)]
     private ?string $chaves = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $batch = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getBatch(): ?\DateTimeInterface
-    {
-        return $this->batch;
     }
 
     public function setBatch(\DateTimeInterface $batch): self
@@ -107,5 +102,10 @@ class Blocks
         $this->chaves = $chaves;
 
         return $this;
+    }
+
+    public function getBatch(): ?\DateTimeInterface
+    {
+        return $this->batch;
     }
 }

@@ -10,7 +10,7 @@
  - Symfony Framework 5.4
 
 ## Como executar a aplicação.  
-Acesar o terminar o utilizar os seguintes comandos:
+Access or end the use of the following commands:  
  ```
  symfony serve  
  php bin/console doctrine:database:create
@@ -26,7 +26,7 @@ php bin/console avato:test string --requests=100
 ```
 or by accessing the route directly:
 ```
-https://localhost:8000/hash/{input_string}/{number_attempts}
+https://localhost:8000/hash/{input_string}/{number_attempts} | Method: GET
 ```  
 The Return of the route will have the following format:
 ```
@@ -57,4 +57,23 @@ The Return of the route will have the following format:
     "attempts": 26759
   }
   ]
+```  
+
+The route above is limited to 10 requests per minute and if this limit is exceeded, error 429 will be triggered with the message Too Many
+Attempts“
+
+To search for a particular word, use the following route:
+```
+https://localhost:8000/search/{word-to-search} | Method: GET
+```
+For pagination of results use:
+```
+https://localhost:8000/search/string?page={page_number}&limit={limit_by_page} | Method: 200
+```
+If no records are found, the return will have the following format:
+```
+Route: https://localhost:8000/search/string?page=2&limit=20 | Status: 404
+[
+  "NOT FOUND"
+]
 ```

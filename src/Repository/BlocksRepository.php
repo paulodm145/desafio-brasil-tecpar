@@ -42,25 +42,16 @@ class BlocksRepository extends ServiceEntityRepository
     /**
      * @return Blocks[] Returns an array of Blocks objects
      */
-    public function findByInputString($value): array
+    public function findByInputString(string $value, int $page = 1, int $limit = 2): array
     {
         return $this->createQueryBuilder('b')
-            ->where('b.enter_string LIKE %:val%')
+            ->select("DATE_FORMAT(b.batch, '%Y-%m-%d %H:%i:%s') as batch", 'b.blockNumber', 'b.enterString as string_entrada', 'b.chaves as key')
+            ->where('b.enterString LIKE :val')
             ->setParameter('val', $value)
             ->orderBy('b.attempts', 'ASC')
-            ->setMaxResults(10)
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-
-//    public function findOneBySomeField($value): ?Blocks
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
